@@ -1,5 +1,5 @@
 @import "global.css";
-
+/*
 body{
     display: flex;
 }
@@ -20,3 +20,47 @@ body{
     background-color: blanchedalmond;
     text-align: right;
 }
+*/
+
+#survey {
+    /* Mettre le sondage dans une boîte avec un fond gris clair */
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .question-container {
+    /* Mettre chaque question dans une boîte avec un fond blanc */
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  
+  .question-container p {
+    /* Mettre le texte de chaque question en gras */
+    font-weight: bold;
+  }
+  
+  .choice-container {
+    /* Mettre chaque réponse dans une ligne séparée */
+    display: flex;
+    /* Aligner les réponses à droite */
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+  
+  .choice-container input[type="checkbox"],
+  .choice-container input[type="radio"] {
+    /* Mettre une marge à gauche de chaque input */
+    margin-left: 10px;
+    order: 1;
+  }
+  
+  .choice-container span {
+    /* Mettre le texte de chaque réponse à côté de l'input */
+    margin-left: 5px;
+    
+  }
