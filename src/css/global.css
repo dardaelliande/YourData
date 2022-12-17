@@ -1,0 +1,16 @@
+:root{
+    --main-bg-color: white;
+    --main-color: blue;
+    --main-text-color:black;
+    --main-text-font:'Roboto';
+}
+
+.rowBox{
+    display: flex;
+    flex-direction: row;
+}
+
+.columnBox{
+    display:flex;
+    flex-direction: column;
+}
