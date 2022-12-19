@@ -1,0 +1,1 @@
+let questionTypes = ['unique', 'multiple', 'text'];

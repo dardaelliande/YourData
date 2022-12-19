@@ -23,44 +23,61 @@ body{
 */
 
 #survey {
-    /* Mettre le sondage dans une boîte avec un fond gris clair */
-    background-color: #eee;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  .question-container {
-    /* Mettre chaque question dans une boîte avec un fond blanc */
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-  }
-  
-  .question-container p {
-    /* Mettre le texte de chaque question en gras */
-    font-weight: bold;
-  }
-  
-  .choice-container {
-    /* Mettre chaque réponse dans une ligne séparée */
-    display: flex;
-    /* Aligner les réponses à droite */
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 5px;
+  /* Mettre le sondage dans une boîte avec un fond gris clair */
+  padding: 20px;
+  border-radius: 5px;
+  border : solid black 1px;
 }
 
+.question-container {
+  /* Mettre chaque question dans une boîte avec un fond blanc */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.question-container p {
+  /*
+    color:var(--main-text-color);
+    font-family: var(--main-text-font);
+    /* Mettre le texte de chaque question en gras */
+  /*
+    font-weight: bold;
+    background-color: aquamarine;
+    */
+  background: #139ee0;
+  color: #fff;
+  padding: 7px 15px;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.choice-container {
+  /* Mettre chaque réponse dans une ligne séparée */
+  display: flex;
+  /* Aligner les réponses à droite */
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 5px;
+  background-color: brown;
   
-  .choice-container input[type="checkbox"],
-  .choice-container input[type="radio"] {
-    /* Mettre une marge à gauche de chaque input */
-    margin-left: 10px;
-    order: 1;
-  }
-  
-  .choice-container span {
-    /* Mettre le texte de chaque réponse à côté de l'input */
-    margin-left: 5px;
-    
-  }
+}
+
+.choice-container input[type="checkbox"],
+.choice-container input[type="radio"] {
+  /* Mettre une marge à gauche de chaque input */
+  margin-left: 10px;
+  order: 1;
+}
+
+.choice-container span {
+  color: var(--main-text-color);
+  font-family: var(--main-text-font);
+  /* Mettre le texte de chaque réponse à côté de l'input */
+  margin-left: 5px;
+}
+
+.inputField {
+  color: var(--main-text-color);
+  font-family: var(--main-text-font);
+}

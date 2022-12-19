@@ -50,6 +50,7 @@ survey.forEach((question) => {
     const inputElement = document.createElement('input');
     inputElement.type = 'text';
     inputElement.name = question.question;
+    inputElement.classList.add('inputField');
     choiceContainer.appendChild(inputElement);
     questionContainer.appendChild(choiceContainer);
   }
