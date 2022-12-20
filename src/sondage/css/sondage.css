@@ -1,26 +1,4 @@
 @import "global.css";
-/*
-body{
-    display: flex;
-}
-
-.survey{
-    background-color: blueviolet;
-}
-
-.question{
-    color:var(--main-text-color);
-    font-family: var(--main-text-font);
-    background-color: aqua;    
-}
-
-.formInput{
-    color:var(--main-text-color);
-    font-family: var(--main-text-font);
-    background-color: blanchedalmond;
-    text-align: right;
-}
-*/
 
 #survey {
   /* Mettre le sondage dans une boîte avec un fond gris clair */

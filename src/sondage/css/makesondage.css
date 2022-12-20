@@ -1,0 +1,14 @@
+@import "global.css";
+
+  /* Applique une bordure et un arrière-plan aux champs de formulaire */
+form {
+  background-color: bisque;
+  font-family:var(--main-text-font);
+  color: var(--main-text-color);
+  gap: 30px;
+}
+
+.questionContainer{
+  border: solid 1px black;
+  border-radius: 5px;
+}

@@ -9,11 +9,10 @@ function createQuestionTitle(){
 
     var inputText = document.createElement('input');
     inputText.type= 'text';
+    inputText.id = 'textTitleInput';
 
     question.appendChild(label);
     question.appendChild(inputText);
-
-    console.log(question);
     return question;
 }
 
@@ -25,9 +24,12 @@ function createQuestionType(){
     label.innerText='Type de la question :';
 
     var choice = document.createElement('select');
+    choice.id='selectType';
+
     var optionMultiple = document.createElement('option');
     optionMultiple.value='multiple';
     optionMultiple.text='multiple';
+    
 
     var optionUnique = document.createElement('option');
     optionUnique.value='unique';
@@ -45,18 +47,15 @@ function createQuestionType(){
     choice.addEventListener('change',function(){
         var optionContainer = this.parentElement.parentElement.querySelector('#optionsContainer');
         if(this.value=='textuelle'){
-            optionContainer.style.visibility = "hidden";
+            optionContainer.style.display = "none";
         }
         else{
-            optionContainer.style.visibility = "initial";
+            optionContainer.style.display = "initial";
         }
     })
 
     question.appendChild(label);
     question.appendChild(choice);
-
-    console.log(question);
-
     return question;
 }
 
@@ -64,8 +63,6 @@ function createBoxToAddOption(){
     var box = document.createElement('div');
     box.id='optionsContainer';
     box.classList.add('columnBox');
-
-    console.log(box);
 
     return box;
 }
@@ -105,41 +102,89 @@ function createButtonAddOption(){
         let wichOption = optionsBox.childElementCount;
 
         optionsBox.appendChild(createInputTextWithLabel(wichOption));
-
-        console.log(wichOption);
     });
-
-
-    console.log(button);
-
     return button;
 }
-
-
 
 function addQuestion(){
 
     var newQuestion = document.createElement('div');
+    newQuestion.classList.add('questionContainer');
 
     newQuestion.appendChild(createQuestionTitle());
     newQuestion.appendChild(createQuestionType());
     newQuestion.appendChild(createBoxToAddOption());
     newQuestion.appendChild(createButtonAddOption());
-
-    console.log(newQuestion.childNodes);
-
-    // Ajoutez la question au formulaire
-	document.getElementById('form').appendChild(newQuestion);
+    return newQuestion;   
 }
 
 
 document.getElementById('addQuestion').addEventListener('click', function() {
 	// Créez un nouvel élément de formulaire pour la question suivante
-	var newQuestion = document.createElement('div');
+	var newQuestion = addQuestion();
 
-    addQuestion();
+    // Ajoutez la question au formulaire
+	document.getElementById('form').appendChild(newQuestion);
+
+    
 });
 
+document.getElementById('submit').addEventListener('click', function() {
+    //Crée la variable qui va stocker la version traitée du formulaire
+    var surveyQuestions = [];
 
+	// Récupere le fomulaire 
+    var form = document.querySelector('#form');
+    var childrens = form.childNodes;
 
-addQuestion();
+    childrens.forEach(element => {
+        var question;
+        var questionType = element.querySelector('#selectType').value;
+        switch (questionType){
+            case 'multiple' :
+                var questionTitle = element.querySelector('#textTitleInput').value;
+                choicesContainer = element.querySelector('#optionsContainer').childNodes;
+                var choicesList = [];
+                choicesContainer.forEach(element => {
+                    choicesList.push(element.childNodes[1].value)
+                });
+                question = {
+                    type : questionType,
+                    question : questionTitle,
+                    choices : choicesList
+                };
+                break;
+
+            case 'unique' :
+                var questionTitle = element.querySelector('#textTitleInput').value;
+                choicesContainer = element.querySelector('#optionsContainer').childNodes;
+                var choicesList = [];
+                choicesContainer.forEach(element => {
+                    choicesList.push(element.childNodes[1].value)
+                });
+                question = {
+                    type : questionType,
+                    question : questionTitle,
+                    choices : choicesList
+                };
+                break;
+
+            case 'textuelle' :
+                var questionTitle = element.querySelector('#textTitleInput').value;
+                question = {
+                    type : questionType,
+                    question : questionTitle
+                };
+                break;
+        }
+        surveyQuestions.push(question);
+    });
+
+    var survey ={
+        company     : document.querySelector('#companyName').value,
+        questions   : surveyQuestions
+    };
+
+    console.log(survey);
+	
+});
