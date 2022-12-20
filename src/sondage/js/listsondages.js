@@ -51,4 +51,15 @@ const survey1 = [{
   surveyList.push(survey2);
   surveyList.push(survey3);
 
-  
+// Envoyez une requête HTTP GET au script serveur
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '../database/survey.php');
+xhr.send();
+
+// Traitez la réponse du script serveur
+xhr.onload = function() {
+  if (xhr.status == 200) {
+    // Traitez les données de la réponse ici
+    console.log(xhr.responseText);
+  }
+};
