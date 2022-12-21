@@ -1,3 +1,4 @@
+/*
 const survey = [{
   type: 'multiple',
   question: 'Quel est votre animal préféré ?',
@@ -15,8 +16,9 @@ const survey = [{
 ];
 
 console.log(survey);
+*/
 
-function displaySurvey() {
+function displaySurvey(survey) {
 const surveyContainer = document.querySelector('#survey');
 survey.forEach((question) => {
   // Créer un élément div pour chaque question
@@ -93,3 +95,8 @@ const submitButton = document.createElement('button');
 
 // Appeler la fonction pour afficher le sondage
 displaySurvey();
+
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+
+console.log(id);

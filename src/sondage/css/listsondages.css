@@ -3,10 +3,7 @@
 h1{
     font-family: 'Mulish';
     font-style: normal;
-    font-weight: 700;
-    font-size: 64px;
-    line-height: 56px;
-    /* identical to box height, or 88% */
+    font-size: 32px;
 
     text-align: center;
     letter-spacing: 0.2px;
@@ -23,6 +20,11 @@ h1{
 .survey h1{
     color: var(--main-text-color);
     font-family: var(--main-text-font);
+}
+
+.surveyButton{
+    background-color: white;
+    border: 0ch;
 }
 
 .menu{

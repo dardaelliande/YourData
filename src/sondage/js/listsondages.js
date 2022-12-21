@@ -4,14 +4,24 @@ function createSurveyCase(survey){
   var sondageName         = survey['name'];
   var sondageDescription  = survey['description'];
   var company             = survey['idCompany'];
+  var id                  = survey['id'];
 
   var title = document.createElement('h1');
   title.innerText=sondageName;
 
   div.appendChild(title);
 
+  var button = document.createElement('button');
+  button.classList.add('surveyButton');
+  button.appendChild(div);
+  button.onclick = function() {
+    window.location.href = `answer.html?id=${id}`;
+  }
+
+  console.log(button.onclick);
+
   var container = document.getElementById('surveyListContainer');
-  container.appendChild(div);
+  container.appendChild(button);
 }
 
 // Envoyez une requête HTTP GET au script serveur
