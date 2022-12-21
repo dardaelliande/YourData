@@ -24,7 +24,7 @@ function createQuestionType(){
     label.innerText='Type de la question :';
 
     var choice = document.createElement('select');
-    choice.id='selectType';
+    choice.id='selectedType';
 
     var optionMultiple = document.createElement('option');
     optionMultiple.value='multiple';
@@ -118,6 +118,44 @@ function addQuestion(){
     return newQuestion;   
 }
 
+function sendSurveyToDataBase(survey){
+    const postRequest = new XMLHttpRequest();
+    postRequest.open('POST', '../database/survey.php');
+    postRequest.setRequestHeader('Content-Type', 'application/json');
+  
+    // Traitez la réponse du script serveur
+    postRequest.onload = function() {       
+      if (postRequest.status == 200) {
+        //console.log(postRequest.responseText);
+      }
+    };
+  
+    // Envoyez la requête avec les données préparées
+    postRequest.send(JSON.stringify(survey));
+    console.log(JSON.stringify(survey));
+
+    
+}
+
+// Envoyez une requête HTTP GET au script serveur
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '../database/companies.php');
+xhr.send();
+
+// Traitez la réponse du script serveur
+xhr.onload = function() {
+  if (xhr.status == 200) {
+    // Traitez les données de la réponse ici;
+    const data = JSON.parse(xhr.responseText);
+    const dataList = document.getElementById('companyList');
+    data.forEach(element => {
+        var option = document.createElement('option');
+        option.value = element['name'];
+        dataList.appendChild(option);
+    });
+
+  }
+};
 
 document.getElementById('addQuestion').addEventListener('click', function() {
 	// Créez un nouvel élément de formulaire pour la question suivante
@@ -138,8 +176,9 @@ document.getElementById('submit').addEventListener('click', function() {
     var childrens = form.childNodes;
 
     childrens.forEach(element => {
-        var question;
-        var questionType = element.querySelector('#selectType').value;
+        if (element.nodeType === Node.ELEMENT_NODE) {
+            var question;
+        var questionType = element.querySelector('#selectedType').value;
         switch (questionType){
             case 'multiple' :
                 var questionTitle = element.querySelector('#textTitleInput').value;
@@ -178,13 +217,15 @@ document.getElementById('submit').addEventListener('click', function() {
                 break;
         }
         surveyQuestions.push(question);
+        }
+        
     });
 
     var survey ={
+        name        : document.querySelector('#surveyName').value,
         company     : document.querySelector('#companyName').value,
         questions   : surveyQuestions
     };
 
-    console.log(survey);
-	
+    sendSurveyToDataBase(survey)	
 });

@@ -10,8 +10,14 @@
   <body>
     <h1>Création de sondage</h1>
     <h2>Nom de l'entreprise : </h2>
-    <input type="text" id="companyName">
-    <form id="form"></form>
+    <datalist id="companyList" >
+    </datalist>
+    <input type="search" id="companyName" list="companyList">
+    <h2>Nom du sondage : </h2>
+    <input type="text" id="surveyName">
+    <form id="form">
+
+    </form>
     <br>
     <br>
     <button type="button" id="addQuestion">Ajouter une question</button>

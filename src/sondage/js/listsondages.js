@@ -1,55 +1,18 @@
-const survey1 = [{
-    type: 'multiple',
-    question: 'Quel est votre animal préféré ?',
-    choices: ['Chat', 'Chien', 'Oiseau', 'Autre'],
-  },
-  {
-    type: 'unique',
-    question: 'Quel est votre film préféré ?',
-    choices: ['Le Parrain', 'Retour vers le futur', 'Forrest Gump', 'Autre'],
-  },
-  {
-    type: 'text',
-    question: 'Quel est votre plat préféré ?',
-  },
-  ];
+function createSurveyCase(survey){
+  var div = document.createElement('div');
+  div.classList.add('survey');
+  var sondageName         = survey['name'];
+  var sondageDescription  = survey['description'];
+  var company             = survey['idCompany'];
 
-  const survey2 = [{
-    type: 'multiple',
-    question: 'Quel est votre animal préféré ?',
-    choices: ['Chat', 'Chien', 'Oiseau', 'Autre'],
-  },
-  {
-    type: 'unique',
-    question: 'Quel est votre film préféré ?',
-    choices: ['Le Parrain', 'Retour vers le futur', 'Forrest Gump', 'Autre'],
-  },
-  {
-    type: 'text',
-    question: 'Quel est votre plat préféré ?',
-  },
-  ];
+  var title = document.createElement('h1');
+  title.innerText=sondageName;
 
-  const survey3 = [{
-    type: 'multiple',
-    question: 'Quel est votre animal préféré ?',
-    choices: ['Chat', 'Chien', 'Oiseau', 'Autre'],
-  },
-  {
-    type: 'unique',
-    question: 'Quel est votre film préféré ?',
-    choices: ['Le Parrain', 'Retour vers le futur', 'Forrest Gump', 'Autre'],
-  },
-  {
-    type: 'text',
-    question: 'Quel est votre plat préféré ?',
-  },
-  ];
+  div.appendChild(title);
 
-  const surveyList = [];
-  surveyList.push(survey1);
-  surveyList.push(survey2);
-  surveyList.push(survey3);
+  var container = document.getElementById('surveyListContainer');
+  container.appendChild(div);
+}
 
 // Envoyez une requête HTTP GET au script serveur
 const xhr = new XMLHttpRequest();
@@ -60,6 +23,10 @@ xhr.send();
 xhr.onload = function() {
   if (xhr.status == 200) {
     // Traitez les données de la réponse ici
-    console.log(xhr.responseText);
+    const data = JSON.parse(xhr.responseText);
+    const dataList = document.getElementById('companyList');
+    data.forEach(element => {
+        createSurveyCase(element);
+    });
   }
 };
