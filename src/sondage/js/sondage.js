@@ -1,26 +1,6 @@
-/*
-const survey = [{
-  type: 'multiple',
-  question: 'Quel est votre animal préféré ?',
-  choices: ['Chat', 'Chien', 'Oiseau', 'Autre'],
-},
-{
-  type: 'unique',
-  question: 'Quel est votre film préféré ?',
-  choices: ['Le Parrain', 'Retour vers le futur', 'Forrest Gump', 'Autre'],
-},
-{
-  type: 'text',
-  question: 'Quel est votre plat préféré ?',
-},
-];
-
-console.log(survey);
-*/
-
 function displaySurvey(survey) {
 const surveyContainer = document.querySelector('#survey');
-survey.forEach((question) => {
+survey['questions'].forEach((question) => {
   // Créer un élément div pour chaque question
   const questionContainer = document.createElement('div');
   questionContainer.classList.add('question-container');
@@ -45,7 +25,7 @@ survey.forEach((question) => {
       choiceContainer.appendChild(choiceText);
       questionContainer.appendChild(choiceContainer);
     });
-  } else if (question.type === 'text') {
+  } else if (question.type === 'textuelle') {
     const choiceContainer = document.createElement('div');
     choiceContainer.classList.add('choice-container');
     // Créer un élément input de type texte pour les questions textuelles
@@ -93,10 +73,18 @@ const submitButton = document.createElement('button');
 
 }
 
-// Appeler la fonction pour afficher le sondage
-displaySurvey();
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 
-console.log(id);
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '../database/survey.php?id='+id+'');
+xhr.send();
+
+// Traitez la réponse du script serveur
+xhr.onload = function() {
+  if (xhr.status == 200) {
+    const data = JSON.parse(xhr.responseText);
+    displaySurvey(data);
+  }
+};
