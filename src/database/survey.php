@@ -31,8 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $questions = [];
             while ($row = $result->fetch_assoc()) {
                 $question = [];
-                $question["type"] = $row["answer_type"];
-                $question["question"] = $row["question"];
+                $question["id"]         = $row["id"];
+                $question["type"]       = $row["answer_type"];
+                $question["question"]   = $row["question"];
 
                 // Retrieve the choices for the question
                 $stmt = $mysqli->prepare(
