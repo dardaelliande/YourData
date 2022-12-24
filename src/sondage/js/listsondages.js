@@ -1,42 +1,44 @@
-function createSurveyCase(survey){
-  var div = document.createElement('div');
-  div.classList.add('survey');
-  var sondageName         = survey['name'];
-  var sondageDescription  = survey['description'];
-  var company             = survey['idCompany'];
-  var id                  = survey['id'];
+function createSurveyCase(survey) {
+	var div = document.createElement('div');
+	div.classList.add('survey');
+	//Récupération des données du sondage
+	var sondageName = survey['name'];
+	var sondageDescription = survey['description'];
+	var company = survey['idCompany'];
+	var id = survey['id'];
 
-  var title = document.createElement('h1');
-  title.innerText=sondageName;
+	var title = document.createElement('h1');
+	title.innerText = sondageName;
 
-  div.appendChild(title);
+	div.appendChild(title);
 
-  var button = document.createElement('button');
-  button.classList.add('surveyButton');
-  button.appendChild(div);
-  button.onclick = function() {
-    window.location.href = `answer.html?id=${id}`;
-  }
+	//Création d'un boutton renvoyant vers la page /answer.html, avec l'id du sondage associé
+	var button = document.createElement('button');
+	button.classList.add('surveyButton');
+	button.appendChild(div);
+	button.onclick = function() {
+		window.location.href = `answer.html?id=${id}`;
+	}
 
-  console.log(button.onclick);
+	console.log(button.onclick);
 
-  var container = document.getElementById('surveyListContainer');
-  container.appendChild(button);
+	var container = document.getElementById('surveyListContainer');
+	container.appendChild(button);
 }
 
-// Envoyez une requête HTTP GET au script serveur
+// Requête GET permettant de récupérer les sondages présents dans la base de données
 const xhr = new XMLHttpRequest();
 xhr.open('GET', '../database/survey.php');
 xhr.send();
 
-// Traitez la réponse du script serveur
 xhr.onload = function() {
-  if (xhr.status == 200) {
-    // Traitez les données de la réponse ici
-    const data = JSON.parse(xhr.responseText);
-    const dataList = document.getElementById('companyList');
-    data.forEach(element => {
-        createSurveyCase(element);
-    });
-  }
+	if (xhr.status == 200) {
+		// data = liste des sondages
+		const data = JSON.parse(xhr.responseText);
+		const dataList = document.getElementById('companyList');
+		//Création d'une case agissant tel un boutton qui renvoit vers le sondage pour chaque sondage
+		data.forEach(element => {
+			createSurveyCase(element);
+		});
+	}
 };
