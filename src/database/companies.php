@@ -7,26 +7,38 @@ function getDbConnection() {
 
 // Traitement de la requête GET
 function handleGetRequest() {
-  // Exécutez une requête SELECT pour récupérer toutes les données de la table "companies"
   $mysqli = getDbConnection();
-  $stmt = $mysqli->prepare('SELECT * FROM companies');
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  // Créez un tableau pour stocker les résultats
-  $data = [];
-
-  // Parcourez les enregistrements et ajoutez-les au tableau
-  while ($row = $result->fetch_assoc()) {
-    $data[] = $row;
+  if (isset($_GET["idCompany"])) {
+    $id = $mysqli->real_escape_string($_GET["idCompany"]);
+    
+    // Exécution requête select des informations d'une entreprise
+    $stmt = $mysqli->prepare('SELECT * FROM companies WHERE id = ?');
+    $stmt->bind_param("i", $id);
+  }
+  else{
+    // Exécution requête select pour récupérer les informations de toutes les entreprises 
+    $stmt = $mysqli->prepare('SELECT * FROM companies');
+    
   }
 
-  // Renvoyez le tableau sous forme de chaîne JSON
-  echo json_encode($data);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-  // Fermez la connexion à la base de données
-  $mysqli->close();
+    // Créez un tableau pour stocker les résultats
+    $data = [];
+
+    // Parcourez les enregistrements et ajoutez-les au tableau
+    while ($row = $result->fetch_assoc()) {
+      $data[] = $row;
+    }
+
+    // Renvoyez le tableau sous forme de chaîne JSON
+    echo json_encode($data);
+
+    // Fermez la connexion à la base de données
+    $mysqli->close();
 }
+  
 
 // Traitement de la requête POST
 function handlePostRequest() {

@@ -17,10 +17,10 @@ function createSurveyCase(survey) {
 	  window.location.href = `answer.html?id=${id}`;
 	};
   
-	div.appendChild(button);
+	button.appendChild(div);
   
 	const container = document.getElementById('surveyListContainer');
-	container.appendChild(div);
+	container.appendChild(button);
   }
   
   // Requête GET permettant de récupérer les sondages présents dans la base de données

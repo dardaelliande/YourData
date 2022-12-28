@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -502,
-    "scrollLeft": 0,
-    "zoomLevel": 1,
+    "scrollTop": -304,
+    "scrollLeft": -128,
+    "zoomLevel": 0.9,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -143,7 +143,7 @@
           "active": false,
           "left": 1092.7294,
           "top": 707.4474,
-          "zIndex": 6,
+          "zIndex": 5,
           "widthName": 79.0478515625,
           "widthComment": 60
         },
@@ -467,7 +467,7 @@
           "active": false,
           "left": 567.7781,
           "top": 696.5719,
-          "zIndex": 7,
+          "zIndex": 9,
           "widthName": 60,
           "widthComment": 60
         },
@@ -789,9 +789,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 78.7512,
-          "top": 1268.4866,
-          "zIndex": 15,
+          "left": 70.9735,
+          "top": 1191.8207,
+          "zIndex": 12,
           "widthName": 60,
           "widthComment": 60
         },
@@ -870,13 +870,36 @@
               "widthDefault": 60
             },
             "id": "966abc06-5d17-444c-a288-ed5b65f00d9b"
+          },
+          {
+            "name": "idSurvey",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "39783145-b8a2-4c40-acde-e1cd9856c5dc"
           }
         ],
         "ui": {
           "active": false,
-          "left": 77.1104,
-          "top": 984.0162,
-          "zIndex": 27,
+          "left": 68.2216,
+          "top": 829.5721,
+          "zIndex": 17,
           "widthName": 126.26171875,
           "widthComment": 60
         },
@@ -1013,8 +1036,8 @@
           "columnIds": [
             "9044bd5b-61c7-434b-a00e-d92dd3bd9395"
           ],
-          "x": 475.26030234375,
-          "y": 1049.2662,
+          "x": 466.37150234374997,
+          "y": 942.8221,
           "direction": "right"
         },
         "constraintName": "fk_survey_questions_to_user_responses",
@@ -1056,8 +1079,8 @@
           "columnIds": [
             "12cc03b2-b374-460a-8dbd-842e99d7b8a1"
           ],
-          "x": 275.7512,
-          "y": 1268.4866,
+          "x": 267.9735,
+          "y": 1191.8207,
           "direction": "top"
         },
         "end": {
@@ -1065,13 +1088,39 @@
           "columnIds": [
             "966abc06-5d17-444c-a288-ed5b65f00d9b"
           ],
-          "x": 276.185351171875,
-          "y": 1114.5162,
+          "x": 267.29655117187497,
+          "y": 980.5721,
           "direction": "bottom"
         },
         "constraintName": "fk_user_to_user_responses",
         "visible": true,
         "id": "0abf3e8b-f5f1-4c46-9576-64af8954a88c"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "dde277e8-66d7-484e-a8ba-a324e7381db5",
+          "columnIds": [
+            "58f9f02a-ce32-4a7e-acf2-6bce74ca2748"
+          ],
+          "x": 567.7781,
+          "y": 782.3219,
+          "direction": "left"
+        },
+        "end": {
+          "tableId": "ad8941e9-2400-460f-94ff-81c6732fe317",
+          "columnIds": [
+            "39783145-b8a2-4c40-acde-e1cd9856c5dc"
+          ],
+          "x": 466.37150234374997,
+          "y": 867.3221,
+          "direction": "right"
+        },
+        "constraintName": "fk_survey_to_user_responses",
+        "visible": true,
+        "id": "1c25abe0-443d-447f-ba4d-7abada81284c"
       }
     ]
   }

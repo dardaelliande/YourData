@@ -63,6 +63,27 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             echo "Survey not found";
         }
     } 
+    else if (isset($_GET["idCompany"])) {
+        // Récupérez les paramètres de la requête GET
+        $idCompany = $_GET["idCompany"];
+    
+        // Retrieve the survey data from the database
+        $stmt = $mysqli->prepare("SELECT s.*, COUNT(r.idSurvey) AS nbResponses
+                                  FROM survey s
+                                  LEFT JOIN user_responses r ON s.id = r.idSurvey
+                                  WHERE s.idCompany = ?
+                                  GROUP BY s.id");
+        $stmt->bind_param("i", $idCompany);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Parcourez les enregistrements et ajoutez-les au tableau
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        // Renvoyez le tableau sous forme de chaîne JSON
+        echo json_encode($data);
+    }    
     else {
       // Construisez la requête SQL sans utiliser les paramètres
       $query = "SELECT * FROM survey";

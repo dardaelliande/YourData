@@ -12,6 +12,7 @@ function createQuestionTitle() {
   
 	question.appendChild(label);
 	question.appendChild(inputText);
+
 	return question;
   }
   
@@ -54,6 +55,7 @@ function createQuestionTitle() {
   
 	question.appendChild(label);
 	question.appendChild(choice);
+
 	return question;
   }
   
@@ -70,23 +72,24 @@ function createQuestionTitle() {
   function createInputText() {
 	const input = document.createElement('input');
 	input.type = 'text';
+
 	return input;
   }
   
-  // Crée un input de type texte, en lui associant un label à l'aide d'une div
-  function createInputTextWithLabel(string) {
+// Crée un input de type texte, en lui associant un label à l'aide d'une div
+function createInputTextWithLabel(string) {
 	const box = document.createElement('div');
 	box.classList.add('columnBox');
   
 	const label = document.createElement('label');
 	label.innerText = `Option ${string + 1}`
 	const input = createInputText();
-input.id = 'optionInput';
+  input.id = 'optionInput';
 
-box.appendChild(label);
-box.appendChild(input);
+  box.appendChild(label);
+  box.appendChild(input);
 
-return box;
+  return box;
 }
 
 // Crée un bouton permettant d'ajouter une option à la question
@@ -107,53 +110,109 @@ function createButtonAddOption() {
   return button;
 }
 
-// Crée un bouton permettant de soumettre les données de la question
-function createButtonSubmit() {
-  const button = document.createElement('button');
-  button.innerText = 'Soumettre';
-
-  // Lorsque le bouton est cliqué, il récupère les données de la question et les envoie via une requête HTTP
-  button.addEventListener('click', function(event) {
-    event.preventDefault();
-
-    const title = this.parentElement.querySelector('#textTitleInput').value;
-    const type = this.parentElement.querySelector('#selectedType').value;
-    const options = [];
-    const optionInputs = this.parentElement.querySelectorAll('#optionInput');
-
-    optionInputs.forEach(input => {
-      options.push(input.value);
-    });
-
-    const data = { title, type, options };
-
-    // Envoi de la requête HTTP
-    fetch('/database/addQuestion.php', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(result => {
-        // Affichage du résultat de la requête
-        console.log(result);
-      });
-  });
-
-  return button;
-}
-
 // Crée tous les éléments de la page
 function createElements() {
-  const mainElement = document.querySelector('main');
+  const mainElement = document.getElementById('form');
 
-  mainElement.appendChild(createQuestionTitle());
-  mainElement.appendChild(createQuestionType());
-  mainElement.appendChild(createBoxToAddOption());
-  mainElement.appendChild(createButtonAddOption());
-  mainElement.appendChild(createButtonSubmit());
+  const questionElement = document.createElement('div');
+
+  questionElement.appendChild(createQuestionTitle());
+  questionElement.appendChild(createQuestionType());
+  questionElement.appendChild(createBoxToAddOption());
+  questionElement.appendChild(createButtonAddOption());
+
+  mainElement.appendChild(questionElement);
 }
+
+//Permet d'envoyer à la base de données le formulaire une fois qu'il a été crée
+function sendSurveyToDataBase(survey) {
+	//Crée la requête POST lié au fichier survey.php
+	const postRequest = new XMLHttpRequest();
+	postRequest.open('POST', '../database/survey.php');
+	postRequest.setRequestHeader('Content-Type', 'application/json');
+
+	postRequest.onload = function() {
+		if (postRequest.status == 200) {
+			console.log(postRequest.responseText);
+		}
+	};
+
+	//Envoie la requête avec le sondage sous forme textuelle
+	postRequest.send(JSON.stringify(survey));
+	console.log(JSON.stringify(survey));
+
+
+}
+
+// Lorsque le bouton est cliqué, il ajoute un input de type texte avec label dans le contenaire des options
+document.getElementById('addQuestion').addEventListener('click', function(event) {
+  event.preventDefault();
+  createElements();
+});
+
+document.getElementById('submit').addEventListener('click', function(event) {
+  event.preventDefault();
+  //Crée la variable qui va stocker la version traitée du formulaire
+	var surveyQuestions = [];
+
+	//Récupere le fomulaire 
+	var form = document.querySelector('#form');
+	var childrens = form.childNodes;
+
+	childrens.forEach(element => {
+		if (element.nodeType === Node.ELEMENT_NODE) {
+			var question;
+			var questionType = element.querySelector('#selectedType').value;
+			switch (questionType) {
+				case 'multiple':
+					var questionTitle = element.querySelector('#textTitleInput').value;
+					choicesContainer = element.querySelector('#optionsContainer').childNodes;
+					var choicesList = [];
+					choicesContainer.forEach(element => {
+						choicesList.push(element.childNodes[1].value)
+					});
+					question = {
+						type: questionType,
+						question: questionTitle,
+						choices: choicesList
+					};
+					break;
+
+				case 'unique':
+					var questionTitle = element.querySelector('#textTitleInput').value;
+					choicesContainer = element.querySelector('#optionsContainer').childNodes;
+					var choicesList = [];
+					choicesContainer.forEach(element => {
+						choicesList.push(element.childNodes[1].value)
+					});
+					question = {
+						type: questionType,
+						question: questionTitle,
+						choices: choicesList
+					};
+					break;
+
+				case 'textuelle':
+					var questionTitle = element.querySelector('#textTitleInput').value;
+					question = {
+						type: questionType,
+						question: questionTitle
+					};
+					break;
+			}
+			surveyQuestions.push(question);
+		}
+
+	});
+
+	var survey = {
+		name: document.querySelector('#surveyName').value,
+		company: document.querySelector('#companyName').value,
+		questions: surveyQuestions
+	};
+
+	sendSurveyToDataBase(survey)
+
+});
 
 createElements();
